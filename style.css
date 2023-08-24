@@ -6,3 +6,13 @@
   width: 600px;
   height: 600px;
 }
+.controls {
+  position: absolute;
+  z-index: 10;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.controls, select, option {
+  font-size: 20px;
+}
