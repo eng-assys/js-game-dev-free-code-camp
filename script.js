@@ -1,3 +1,7 @@
+let playerState = 'idle';
+const dropdown = document.getElementById('animations');
+dropdown.addEventListener('change', e => playerState = e.target.value)
+
 const canvas = document.getElementById('canvas1');
 const context = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width = 600;
@@ -7,18 +11,73 @@ const playerImage = new Image();
 playerImage.src = 'shadow_dog.png';
 const spriteWidth = 575; // 6876px width/12 columns = 573 (rounded to 575)
 const spriteHeight = 523; // 5230px height/10 lines - 523
-let frameX = 0;
-let frameY = 0;
+
 let gameFrame = 0;
-const staggerFrames = 2;
+const staggerFrames = 4;
+const spriteAnimations = [];
+const animationStates = [
+  {
+    name: 'idle',
+    frames: 7,
+  },
+  {
+    name: 'jump',
+    frames: 7,
+  },
+  {
+    name: 'fall',
+    frames: 7,
+  },
+  {
+    name: 'run',
+    frames: 9,
+  },
+  {
+    name: 'dizzy',
+    frames: 11,
+  },
+  {
+    name: 'sit',
+    frames: 5,
+  },
+  {
+    name: 'roll',
+    frames: 7,
+  },
+  {
+    name: 'bite',
+    frames: 7,
+  },
+  {
+    name: 'ko',
+    frames: 12,
+  }, {
+    name: 'gethit',
+    frames: 4,
+  }
+];
+animationStates.forEach((state, index) => {
+  let frames = {
+    location: [],
+  }
+  for (let j = 0; j < state.frames; j++) {
+    let positionX = j * spriteHeight;
+    let positionY = index * spriteHeight;
+    frames.location.push({ x: positionX, y: positionY });
+  }
+  spriteAnimations[state.name] = frames;
+});
+console.log(spriteAnimations);
 
 function animate() {
   context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  // context.drawImage(image, sourceX, sourceY, sourceW, sourceH, dx, dy, dw, dh);
+  let position = Math.floor(gameFrame / staggerFrames) % spriteAnimations[playerState].location.length;
+  let frameX = spriteWidth * position;
+  let frameY = spriteAnimations[playerState].location[position].y;
   context.drawImage(
     playerImage,
-    frameX * spriteWidth,
-    frameY * spriteHeight,
+    frameX,
+    frameY,
     spriteWidth,
     spriteHeight,
     0,
@@ -27,13 +86,7 @@ function animate() {
     CANVAS_HEIGHT
   );
 
-  if (gameFrame % staggerFrames == 0) {
-    /**
-     * Changes the currently displayed sprite up to the limit
-     * of animations available in the row
-     */
-    frameX = frameX < 6 ? frameX + 1 : 0;
-  }
+
 
   gameFrame++;
   requestAnimationFrame(animate);
