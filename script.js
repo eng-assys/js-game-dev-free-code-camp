@@ -13,7 +13,7 @@ function animate() {
   context.fillRect(x, y, 100, 100);
   x += 10;
   if (x === 600) {
-    y += 10;
+    y = y >= 600 ? 0 : y + 10;
     x = 0;
   }
 
