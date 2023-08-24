@@ -9,6 +9,8 @@ const spriteWidth = 575; // 6876px width/12 columns = 573 (rounded to 575)
 const spriteHeight = 523; // 5230px height/10 lines - 523
 let frameX = 0;
 let frameY = 0;
+let gameFrame = 0;
+const staggerFrames = 2;
 
 function animate() {
   context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -25,8 +27,15 @@ function animate() {
     CANVAS_HEIGHT
   );
 
-  frameX = frameX < 6 ? frameX + 1 : 0;
+  if (gameFrame % staggerFrames == 0) {
+    /**
+     * Changes the currently displayed sprite up to the limit
+     * of animations available in the row
+     */
+    frameX = frameX < 6 ? frameX + 1 : 0;
+  }
 
+  gameFrame++;
   requestAnimationFrame(animate);
 };
 
