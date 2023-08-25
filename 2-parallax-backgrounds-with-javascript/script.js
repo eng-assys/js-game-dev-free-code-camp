@@ -22,7 +22,6 @@ class Layer {
     this.y = 0;
     this.width = DEFAULT_LAYER_WIDTH;
     this.height = DEFAULT_LAYER_HEIGHT;
-    this.x2 = this.width;
     this.image = image;
     this.speedModifier = speedModifier;
     this.speed = gameSpeed * speedModifier;
@@ -30,17 +29,13 @@ class Layer {
   update() {
     this.speed = gameSpeed * this.speedModifier;
     if (this.x <= -this.width) {
-      this.x = this.width + this.x2 - this.speed;
-    }
-    if (this.x2 <= -this.width) {
-      this.x2 = this.width + this.x - this.speed;
+      this.x = 0;
     }
     this.x = Math.floor(this.x - this.speed);
-    this.x2 = Math.floor(this.x2 - this.speed);
   }
   draw() {
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
-    context.drawImage(this.image, this.x2, this.y, this.width, this.height);
+    context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
   }
 }
 
