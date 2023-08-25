@@ -11,15 +11,21 @@ class Enemy {
     this.width = 100;
     this.height = 50;
   }
+  update() {
+    this.x++;
+    this.y++;
+  }
+  draw() {
+    context.fillRect(this.x, this.y, this.width, this.height);
+  }
 }
 
 const enemy1 = new Enemy();
 
 function animate() {
   context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  enemy1.x++;
-  enemy1.y++;
-  context.fillRect(enemy1.x, enemy1.y, enemy1.width, enemy1.height);
+  enemy1.update();
+  enemy1.draw();
   requestAnimationFrame(animate);
 }
 
