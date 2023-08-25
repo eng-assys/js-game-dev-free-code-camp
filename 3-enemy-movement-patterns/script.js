@@ -4,12 +4,16 @@ const context = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width = 500;
 const CANVAS_HEIGHT = canvas.height = 1000;
 
-enemy1 = {
-  x: 10,
-  y: 50,
-  width: 100,
-  height: 50
+class Enemy {
+  constructor() {
+    this.x = 10;
+    this.y = 50;
+    this.width = 100;
+    this.height = 50;
+  }
 }
+
+const enemy1 = new Enemy();
 
 function animate() {
   context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
