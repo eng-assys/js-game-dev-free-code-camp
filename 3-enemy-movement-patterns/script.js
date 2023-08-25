@@ -14,25 +14,33 @@ for (let enemyNumber = 0; enemyNumber < ENEMIES_AMOUNT; enemyNumber++) {
   enemiesImages.push(image);
 }
 
+let gameFrame = 0;
+
 class Enemy {
   constructor() {
-    this.x = Math.random() * canvas.width;
+    this.image = enemiesImages[0],
+      this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
     this.speed = Math.random() * 4 - 2;
     this.spriteWidth = 293;
     this.spriteHeight = 155;
     this.width = this.spriteWidth / 2.5;
     this.height = this.spriteHeight / 2.5;
+    this.frame = 0;
+    this.flapSpeed = Math.floor(Math.random() * 3 + 1);
   }
   update() {
     this.x += this.speed;
     this.y += this.speed;
+    // animate sprites
+    if (gameFrame % this.flapSpeed === 0) {
+      this.frame > 4 ? this.frame = 0 : this.frame++;
+    }
   }
   draw() {
-    context.strokeRect(this.x, this.y, this.width, this.height);
     context.drawImage(
-      enemiesImages[0],
-      0,
+      this.image,
+      this.frame * this.spriteWidth,
       0,
       this.spriteWidth,
       this.spriteHeight,
@@ -56,6 +64,7 @@ function animate() {
     enemy.update();
     enemy.draw();
   });
+  gameFrame++;
   requestAnimationFrame(animate);
 }
 
