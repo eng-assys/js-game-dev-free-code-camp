@@ -5,7 +5,7 @@ const CANVAS_HEIGHT = canvas.height = 700;
 const DEFAULT_LAYER_WIDTH = 2400;
 const DEFAULT_LAYER_HEIGHT = CANVAS_HEIGHT;
 const LAYERS_AMOUNT = 5;
-let gameSpeed = 5;
+let gameSpeed = 3;
 
 class Layer {
   constructor(image, speedModifier) {
@@ -44,18 +44,18 @@ for (let layerNumber = 0; layerNumber < LAYERS_AMOUNT; layerNumber++) {
 }
 
 const backgroundLayers = [];
-backgroundImages.map((image, index) => {
+backgroundImages.forEach((image, index) => {
   let layer = new Layer(image, 0.5 * index);
   backgroundLayers.push(layer);
 })
 
 function animate() {
   context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  requestAnimationFrame(animate);
-  backgroundLayers.map(layer => {
+  backgroundLayers.forEach(layer => {
     layer.update();
     layer.draw();
-  })
+  });
+  requestAnimationFrame(animate);
 }
 
 animate();
