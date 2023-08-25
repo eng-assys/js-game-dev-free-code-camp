@@ -7,6 +7,15 @@ const DEFAULT_LAYER_HEIGHT = CANVAS_HEIGHT;
 const LAYERS_AMOUNT = 5;
 let gameSpeed = 3;
 
+const slider = document.getElementById('slider');
+slider.value = gameSpeed;
+const showGameSpeed = document.getElementById('showGameSpeed');
+showGameSpeed.innerHTML = gameSpeed;
+slider.addEventListener('change', e => {
+  gameSpeed = e.target.value;
+  showGameSpeed.innerHTML = e.target.value;
+});
+
 class Layer {
   constructor(image, speedModifier) {
     this.x = 0;
@@ -35,7 +44,6 @@ class Layer {
   }
 }
 
-// Generate Layers Array
 const backgroundImages = [];
 for (let layerNumber = 0; layerNumber < LAYERS_AMOUNT; layerNumber++) {
   let image = new Image();
