@@ -110,19 +110,19 @@ class Wheel extends Enemy {
 const enemiesDefinitions = [
   {
     class: FrontBat,
-    amount: 0
+    amount: 5
   },
   {
     class: HorizontalBat,
-    amount: 0
+    amount: 5
   },
   {
     class: Ghost,
-    amount: 0
+    amount: 5
   },
   {
     class: Wheel,
-    amount: 10
+    amount: 5
   }
 ]
 
