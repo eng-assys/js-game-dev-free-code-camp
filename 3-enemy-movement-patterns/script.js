@@ -87,7 +87,23 @@ class Ghost extends Enemy {
 
 class Wheel extends Enemy {
   constructor() {
-    super('assets/enemy4.png', 293, 155);
+    super('assets/enemy4.png', 213, 213);
+    this.newX = Math.random() * (canvas.width - this.width);
+    this.newY = Math.random() * (canvas.height - this.height);
+    this.interval = Math.floor(Math.random() * 200 + 50);
+  }
+  update() {
+    if (gameFrame % this.interval === 0) {
+      this.newX = Math.random() * (canvas.width - this.width);
+      this.newY = Math.random() * (canvas.height - this.height);
+    }
+    let dx = this.x - this.newX;
+    let dy = this.y - this.newY;
+
+    this.x -= dx / 20;
+    this.y -= dy / 20;
+
+    this.animateSprites(7);
   }
 }
 
@@ -102,11 +118,11 @@ const enemiesDefinitions = [
   },
   {
     class: Ghost,
-    amount: 50
+    amount: 0
   },
   {
     class: Wheel,
-    amount: 0
+    amount: 10
   }
 ]
 
