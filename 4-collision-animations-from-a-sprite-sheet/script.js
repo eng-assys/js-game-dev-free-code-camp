@@ -4,7 +4,6 @@ const context = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width = 500;
 const CANVAS_HEIGHT = canvas.height = 700;
 const explosionsArray = [];
-let gameFrame = 0;
 let canvasPosition = canvas.getBoundingClientRect();
 
 class Explosion {
@@ -50,9 +49,8 @@ function animate() {
   explosionsArray.forEach((explosion, index) => {
     explosion.update();
     explosion.draw();
-    if (explosion.frame > 4) explosionsArray.splice(index, 1);
+    if (explosion.frame > 5) explosionsArray.splice(index, 1);
   });
-  gameFrame++;
   requestAnimationFrame(animate);
 }
 
