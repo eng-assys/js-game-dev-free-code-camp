@@ -18,9 +18,11 @@ class Explosion {
     this.image = new Image();
     this.image.src = 'boom.png';
     this.frame = 0;
+    this.timer = 0;
   }
   update() {
-    this.frame = this.frame > 4 ? -1 : this.frame + 1;
+    this.timer++;
+    if (this.timer % 5 === 0) this.frame++;
   }
   draw() {
     context.drawImage(
@@ -38,11 +40,9 @@ class Explosion {
 }
 
 window.addEventListener('click', e => {
-  let explosion = new Explosion(
-    e.x - canvasPosition.left,
-    e.y - canvasPosition.top
-  );
-  explosionsArray.push(explosion);
+  let positionX = e.x - canvasPosition.left;
+  let positionY = e.y - canvasPosition.top;
+  explosionsArray.push(new Explosion(positionX, positionY));
 });
 
 function animate() {
@@ -50,7 +50,7 @@ function animate() {
   explosionsArray.forEach((explosion, index) => {
     explosion.update();
     explosion.draw();
-    if (explosion.frame === -1) explosionsArray.splice(index, 1);
+    if (explosion.frame > 4) explosionsArray.splice(index, 1);
   });
   gameFrame++;
   requestAnimationFrame(animate);
