@@ -1,9 +1,10 @@
 /** @type {HTMLCanvasElement} */
 const canvas = document.getElementById('canvas1');
 const context = canvas.getContext('2d');
-canvas.width = 500;
-canvas.height = 700;
-// const explosions = [];
+const CANVAS_WIDTH = canvas.width = 500;
+const CANVAS_HEIGHT = canvas.height = 700;
+const explosionsArray = [];
+let gameFrame = 0;
 let canvasPosition = canvas.getBoundingClientRect();
 
 class Explosion {
@@ -19,7 +20,7 @@ class Explosion {
     this.frame = 0;
   }
   update() {
-    this.frame++;
+    this.frame = this.frame > 4 ? -1 : this.frame + 1;
   }
   draw() {
     context.drawImage(
@@ -37,11 +38,22 @@ class Explosion {
 }
 
 window.addEventListener('click', e => {
-  context.fillStyle = 'white';
-  context.fillRect(
+  let explosion = new Explosion(
     e.x - canvasPosition.left,
-    e.y - canvasPosition.top,
-    50,
-    50
+    e.y - canvasPosition.top
   );
+  explosionsArray.push(explosion);
 });
+
+function animate() {
+  context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  explosionsArray.forEach((explosion, index) => {
+    explosion.update();
+    explosion.draw();
+    if (explosion.frame === -1) explosionsArray.splice(index, 1);
+  });
+  gameFrame++;
+  requestAnimationFrame(animate);
+}
+
+animate();
