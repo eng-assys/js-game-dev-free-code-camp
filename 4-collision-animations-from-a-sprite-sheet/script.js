@@ -8,19 +8,22 @@ let canvasPosition = canvas.getBoundingClientRect();
 
 class Explosion {
   constructor(x, y) {
+    this.image = new Image();
+    this.image.src = 'boom.png';
+    this.sound = new Audio();
+    this.sound.src = 'boom.wav';
     this.spriteWidth = 200;
     this.spriteHeight = 179;
     this.width = this.spriteWidth / 2;
     this.height = this.spriteHeight / 2;
     this.x = x;
     this.y = y;
-    this.image = new Image();
-    this.image.src = 'boom.png';
     this.frame = 0;
     this.timer = 0;
     this.angle = Math.random() * 6.2 // in radians - 360° is about 6.2 radians
   }
   update() {
+    if (this.frame === 0) this.sound.play();
     this.timer++;
     if (this.timer % 5 === 0) this.frame++;
   }
