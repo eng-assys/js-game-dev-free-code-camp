@@ -25,11 +25,17 @@ class Raven {
     this.markedForDeletion = false;
     this.frame = 0;
     this.maxFrame = 5;
+    this.timeSinceFlap = 0;
+    this.flapInterval = Math.random() * 50 + 50;
   }
-  update() {
+  update(deltaTime) {
     this.x -= this.directionX;
     if (this.x < 0 - this.width) this.markedForDeletion = true;
-    this.frame = (this.frame >= this.maxFrame) ? 0 : this.frame + 1;
+    this.timeSinceFlap += deltaTime;
+    if (this.timeSinceFlap > this.flapInterval) {
+      this.frame = (this.frame >= this.maxFrame) ? 0 : this.frame + 1;
+      this.timeSinceFlap = 0;
+    }
   }
   draw() {
     context.drawImage(
@@ -56,7 +62,7 @@ function animate(timestamp) {
     timeToNextRaven = 0;
   }
   ravens.forEach((raven, index) => {
-    raven.update();
+    raven.update(deltaTime);
     raven.draw();
     if (raven.markedForDeletion) ravens.splice(index, 1);
   });
