@@ -3,6 +3,8 @@ const canvas = document.getElementById('canvas1');
 const context = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+let score = 0;
+context.font = '50px Impact';
 
 let timeToNextRaven = 0;
 let ravenInterval = 500;
@@ -56,11 +58,21 @@ class Raven {
   }
 }
 
+function drawScore() {
+  context.fillStyle = 'black';
+  context.fillText(`Score: ${score}`, 50, 75);
+  context.fillStyle = 'white';
+  context.fillText(`Score: ${score}`, 55, 80);
+}
+
 function animate(timestamp) {
   context.clearRect(0, 0, canvas.width, canvas.height);
   let deltaTime = timestamp - lastTime;
   lastTime = timestamp;
   timeToNextRaven += deltaTime;
+
+  drawScore();
+
   if (timeToNextRaven > ravenInterval) {
     ravens.push(new Raven());
     timeToNextRaven = 0;
