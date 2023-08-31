@@ -3,6 +3,12 @@ const canvas = document.getElementById('canvas1');
 const context = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+const collisionCanvas = document.getElementById('collisionCanvas');
+const collisionContext = collisionCanvas.getContext('2d');
+collisionCanvas.width = window.innerWidth;
+collisionCanvas.height = window.innerHeight;
+
 let score = 0;
 context.font = '50px Impact';
 
@@ -64,6 +70,11 @@ function drawScore() {
   context.fillStyle = 'white';
   context.fillText(`Score: ${score}`, 55, 80);
 }
+
+window.addEventListener('click', e => {
+  const detectPixelColor = context.getImageData(e.x, e.y, 1, 1);
+
+});
 
 function animate(timestamp) {
   context.clearRect(0, 0, canvas.width, canvas.height);
