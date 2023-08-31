@@ -13,4 +13,6 @@ body {
   height: 100%;
 }
 
-#collisionCanvas {}
+#collisionCanvas {
+  opacity: 0;
+}
