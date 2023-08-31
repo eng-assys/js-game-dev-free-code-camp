@@ -56,8 +56,8 @@ class Raven {
     }
   }
   draw() {
-    context.fillStyle = this.color;
-    context.fillRect(this.x, this.y, this.width, this.height);
+    collisionContext.fillStyle = this.color;
+    collisionContext.fillRect(this.x, this.y, this.width, this.height);
     context.drawImage(
       this.image,
       this.frame * this.spriteWidth,
@@ -80,11 +80,12 @@ function drawScore() {
 }
 
 window.addEventListener('click', e => {
-  const detectPixelColor = context.getImageData(e.x, e.y, 1, 1);
+  const detectPixelColor = collisionContext.getImageData(e.x, e.y, 1, 1);
 
 });
 
 function animate(timestamp) {
+  collisionContext.clearRect(0, 0, canvas.width, canvas.height);
   context.clearRect(0, 0, canvas.width, canvas.height);
   let deltaTime = timestamp - lastTime;
   lastTime = timestamp;
