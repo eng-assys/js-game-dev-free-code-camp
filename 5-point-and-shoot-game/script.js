@@ -35,6 +35,12 @@ class Raven {
     this.maxFrame = 5;
     this.timeSinceFlap = 0;
     this.flapInterval = Math.random() * 50 + 50;
+    this.randomColors = [
+      Math.floor(Math.random() * 255),
+      Math.floor(Math.random() * 255),
+      Math.floor(Math.random() * 255)
+    ]
+    this.color = `rgb(${this.randomColors[0]},${this.randomColors[1]},${this.randomColors[0]})`;
   }
   update(deltaTime) {
     if (this.y < 0 || this.y > canvas.height - this.height) {
@@ -50,6 +56,8 @@ class Raven {
     }
   }
   draw() {
+    context.fillStyle = this.color;
+    context.fillRect(this.x, this.y, this.width, this.height);
     context.drawImage(
       this.image,
       this.frame * this.spriteWidth,
