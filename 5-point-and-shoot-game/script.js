@@ -10,6 +10,7 @@ collisionCanvas.width = window.innerWidth;
 collisionCanvas.height = window.innerHeight;
 
 let score = 0;
+let gameOver = false;
 context.font = '50px Impact';
 
 let timeToNextRaven = 0;
@@ -58,6 +59,7 @@ class Raven {
       this.frame = (this.frame >= this.maxFrame) ? 0 : this.frame + 1;
       this.timeSinceFlap = 0;
     }
+    if (this.x < 0 - this.width) gameOver = true;
   }
   draw() {
     context.drawImage(
@@ -124,6 +126,14 @@ function drawScore() {
   context.fillText(`Score: ${score}`, 55, 80);
 }
 
+function drawGameOver() {
+  context.textAlign = 'center';
+  context.fillStyle = 'black';
+  context.fillText(`GAME OVER, your score is ${score}`, canvas.width / 2, canvas.height / 2);
+  context.fillStyle = 'white';
+  context.fillText(`GAME OVER, your score is ${score}`, canvas.width / 2 + 5, canvas.height / 2 + 5);
+}
+
 window.addEventListener('click', e => {
   const detectPixelColor = collisionContext.getImageData(e.x, e.y, 1, 1);
   const pixelColor = detectPixelColor.data;
@@ -171,6 +181,7 @@ function animate(timestamp) {
     explosion.draw();
     if (explosion.markedForDeletion) explosions.splice(index, 1);
   });
-  requestAnimationFrame(animate);
+  if (!gameOver) requestAnimationFrame(animate);
+  else drawGameOver();
 };
 animate(0);
