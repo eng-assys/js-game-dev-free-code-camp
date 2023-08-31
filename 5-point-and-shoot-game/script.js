@@ -95,6 +95,9 @@ function animate(timestamp) {
   if (timeToNextRaven > ravenInterval) {
     ravens.push(new Raven());
     timeToNextRaven = 0;
+    ravens.sort((a, b) => {
+      return a.width - b.width;
+    });
   }
   ravens.forEach((raven, index) => {
     raven.update(deltaTime);
