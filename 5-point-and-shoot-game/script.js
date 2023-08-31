@@ -5,7 +5,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const collisionCanvas = document.getElementById('collisionCanvas');
-const collisionContext = collisionCanvas.getContext('2d');
+const collisionContext = collisionCanvas.getContext('2d', { willReadFrequently: true });
 collisionCanvas.width = window.innerWidth;
 collisionCanvas.height = window.innerHeight;
 
@@ -17,6 +17,7 @@ let ravenInterval = 500;
 let lastTime = 0;
 
 let ravens = [];
+let ravensPositionsByColor = {};
 class Raven {
   constructor() {
     this.image = new Image();
@@ -56,8 +57,6 @@ class Raven {
     }
   }
   draw() {
-    collisionContext.fillStyle = this.color;
-    collisionContext.fillRect(this.x, this.y, this.width, this.height);
     context.drawImage(
       this.image,
       this.frame * this.spriteWidth,
@@ -69,6 +68,8 @@ class Raven {
       this.width,
       this.height
     );
+    collisionContext.fillStyle = this.color;
+    collisionContext.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 
@@ -81,7 +82,13 @@ function drawScore() {
 
 window.addEventListener('click', e => {
   const detectPixelColor = collisionContext.getImageData(e.x, e.y, 1, 1);
+  const pixelColor = detectPixelColor.data;
 
+  const ravenColor = `rgb(${pixelColor[0]},${pixelColor[1]},${pixelColor[0]})`;
+  if (ravens[ravensPositionsByColor[ravenColor]]) {
+    ravens[ravensPositionsByColor[ravenColor]].markedForDeletion = true;
+    score++;
+  }
 });
 
 function animate(timestamp) {
@@ -100,11 +107,17 @@ function animate(timestamp) {
       return a.width - b.width;
     });
   }
+
+  ravensPositionsByColor = {};
   ravens.forEach((raven, index) => {
     raven.update(deltaTime);
     raven.draw();
     if (raven.markedForDeletion) ravens.splice(index, 1);
+    else {
+      ravensPositionsByColor[raven.color] = index;
+    }
   });
+
   requestAnimationFrame(animate);
 };
 animate(0);
