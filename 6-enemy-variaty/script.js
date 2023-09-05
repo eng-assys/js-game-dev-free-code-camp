@@ -11,10 +11,16 @@ window.addEventListener('load', () => {
       this.width = width;
       this.height = height;
       this.enemies = [];
-      this.#addNewEnemy();
-      console.log(this.enemies);
+      this.enemyInterval = 1000;
+      this.enemyTimer = 0;
     }
-    update() {
+    update(deltaTime) {
+      if (this.enemyTimer > this.enemyInterval) {
+        this.#addNewEnemy();
+        this.enemyTimer = 0;
+      } else {
+        this.enemyTimer += deltaTime;
+      }
       this.enemies.forEach(enemy => enemy.update());
     }
     draw() {
@@ -47,7 +53,7 @@ window.addEventListener('load', () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
     const deltaTime = timeStamp - lastTime;
     lastTime = timeStamp
-    game.update();
+    game.update(deltaTime);
     game.draw();
     requestAnimationFrame(animate);
   }
