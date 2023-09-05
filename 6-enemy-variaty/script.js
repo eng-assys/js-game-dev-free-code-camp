@@ -1,5 +1,5 @@
 /** @type {HTMLCanvasElement} */
-document.addEventListener('load', () => {
+window.addEventListener('load', () => {
   const canvas = document.getElementById('canvas1');
   const context = canvas.getContext('2d');
   canvas.width = 500;
@@ -32,10 +32,14 @@ document.addEventListener('load', () => {
     }
   }
 
-  function animate() {
+  let lastTime = 1;
+  function animate(timeStamp) {
     context.clearRect(0, 0, canvas.width, canvas.height);
+    const deltaTime = timeStamp - lastTime;
+    lastTime = timeStamp
+
     requestAnimationFrame(animate);
   }
 
-  animate();
+  animate(0);
 });
