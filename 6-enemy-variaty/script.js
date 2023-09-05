@@ -21,7 +21,10 @@ window.addEventListener('load', () => {
       } else {
         this.enemyTimer += deltaTime;
       }
-      this.enemies.forEach(enemy => enemy.update());
+      this.enemies.forEach((enemy, index) => {
+        if (!enemy.markedForDeletion) enemy.update();
+        else this.enemies.splice(index, 1);
+      });
     }
     draw() {
       this.enemies.forEach(enemy => enemy.draw());
@@ -38,12 +41,14 @@ window.addEventListener('load', () => {
       this.y = Math.random() * this.game.height;
       this.width = 100;
       this.height = 100;
+      this.markedForDeletion = false;
     }
     update() {
       this.x--;
+      if (this.x < 0 - this.width) this.markedForDeletion = true;
     }
     draw() {
-      context.fillRect(this.x, this.y, this.width, this.height);
+      this.game.context.fillRect(this.x, this.y, this.width, this.height);
     }
   }
 
