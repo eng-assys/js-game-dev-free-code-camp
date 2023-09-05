@@ -1,39 +1,41 @@
 /** @type {HTMLCanvasElement} */
-const canvas = document.getElementById('canvas1');
-const context = canvas.getContext('2d');
-canvas.width = 500;
-canvas.height = 800;
+document.addEventListener('load', () => {
+  const canvas = document.getElementById('canvas1');
+  const context = canvas.getContext('2d');
+  canvas.width = 500;
+  canvas.height = 800;
 
-class Game {
-  constructor() {
+  class Game {
+    constructor() {
 
+    }
+    update() {
+
+    }
+    draw() {
+
+    }
+    #addNewEnemy() {
+
+    }
   }
-  update() {
 
+  class Enemy {
+    constructor() {
+
+    }
+    update() {
+
+    }
+    draw() {
+
+    }
   }
-  draw() {
 
+  function animate() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    requestAnimationFrame(animate);
   }
-  #addNewEnemy() {
 
-  }
-}
-
-class Enemy {
-  constructor() {
-
-  }
-  update() {
-
-  }
-  draw() {
-
-  }
-}
-
-function animate() {
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  requestAnimationFrame(animate);
-}
-
-animate();
+  animate();
+});
