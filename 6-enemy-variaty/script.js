@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
       this.width = width;
       this.height = height;
       this.enemies = [];
-      this.enemyInterval = 100;
+      this.enemyInterval = 700;
       this.enemyTimer = 0;
       this.enemyTypes = [Worm, Ghost, Spider];
     }
@@ -130,8 +130,28 @@ window.addEventListener('load', () => {
   class Spider extends Enemy {
     constructor(game) {
       super(game);
-      // this.image = spider;
-
+      this.image = spider;
+      this.spriteWidth = 310;
+      this.spriteHeight = 175;
+      this.width = this.spriteWidth / 2;
+      this.height = this.spriteHeight / 2;
+      this.x = Math.random() * this.game.width;
+      this.y = 0 - this.height;
+      this.velocityX = 0;
+      this.velocityY = Math.random() * 0.2 + 0.2;
+      this.maxLength = Math.random() * this.game.height;
+    }
+    update(deltaTime) {
+      super.update(deltaTime);
+      this.y += this.velocityY * deltaTime;
+      if (this.y > 200) this.velocityY *= -1;
+    }
+    draw() {
+      this.game.context.beginPath();
+      this.game.context.moveTo(this.x + this.width / 2, 0);
+      this.game.context.lineTo(this.x + this.width / 2, this.y + 10);
+      this.game.context.stroke();
+      super.draw();
     }
   }
 
