@@ -56,7 +56,7 @@ window.addEventListener('load', () => {
       this.x = this.game.width;
       this.y = Math.random() * this.game.height;
 
-      this.velocityX = 0;
+      this.velocityX = 0.2;
       this.velocityY = 0;
       this.image;
     }
@@ -114,7 +114,7 @@ window.addEventListener('load', () => {
   class Spider extends Enemy {
     constructor(game) {
       super(game);
-      this.image = spider;
+      // this.image = spider;
 
     }
   }
