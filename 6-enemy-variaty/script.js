@@ -111,6 +111,13 @@ window.addEventListener('load', () => {
       this.x = this.game.width;
       this.y = Math.random() * this.game.height * 0.8;
       this.velocityX = Math.random() * 0.2 + 0.1;
+      this.angle = 0;
+      this.curve = Math.random() * 3;
+    }
+    update(deltaTime) {
+      super.update(deltaTime);
+      this.y += Math.sin(this.angle) * this.curve;
+      this.angle += 0.04;
     }
     draw() {
       this.game.context.save();
