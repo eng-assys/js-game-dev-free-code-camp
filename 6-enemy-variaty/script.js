@@ -112,6 +112,12 @@ window.addEventListener('load', () => {
       this.y = Math.random() * this.game.height * 0.8;
       this.velocityX = Math.random() * 0.2 + 0.1;
     }
+    draw() {
+      this.game.context.save();
+      this.game.context.globalAlpha = 0.7;
+      super.draw();
+      this.game.context.restore();
+    }
   }
 
   class Spider extends Enemy {
