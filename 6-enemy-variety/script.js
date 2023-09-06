@@ -143,6 +143,7 @@ window.addEventListener('load', () => {
     }
     update(deltaTime) {
       super.update(deltaTime);
+      if (this.y < 0 - this.height * 2) this.markedForDeletion = true;
       this.y += this.velocityY * deltaTime;
       if (this.y > 200) this.velocityY *= -1;
     }
