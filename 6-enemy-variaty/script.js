@@ -33,9 +33,6 @@ window.addEventListener('load', () => {
     #addNewEnemy() {
       const randomEnemy = this.enemyTypes[Math.floor(Math.random() * this.enemyTypes.length)];
       this.enemies.push(new randomEnemy(this));
-      this.enemies.sort((a, b) => {
-        return a.y - b.y;
-      });
     }
   }
 
