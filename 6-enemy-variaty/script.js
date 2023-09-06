@@ -107,7 +107,13 @@ window.addEventListener('load', () => {
     constructor(game) {
       super(game);
       this.image = ghost;
-
+      this.spriteWidth = 261;
+      this.spriteHeight = 209;
+      this.width = this.spriteWidth / 2;
+      this.height = this.spriteHeight / 2;
+      this.x = this.game.width;
+      this.y = Math.random() * this.game.height * 0.8;
+      this.velocityX = Math.random() * 0.2 + 0.1;
     }
   }
 
