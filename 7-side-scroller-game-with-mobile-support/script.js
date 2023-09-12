@@ -31,7 +31,21 @@ window.addEventListener('load', () => {
   }
 
   class Player {
-
+    constructor(gameWidth, gameHeight) {
+      this.gameWidth = gameWidth;
+      this.gameHeight = gameHeight;
+      this.width = 200;
+      this.height = 200;
+      this.x = 0;
+      this.y = this.gameHeight - this.height;
+    }
+    draw(context) {
+      context.fillStyle = 'white';
+      context.fillRect(this.x, this.y, this.width, this.height);
+    }
+    update() {
+      this.x++;
+    }
   }
 
   class Background {
@@ -51,9 +65,14 @@ window.addEventListener('load', () => {
   }
 
   const input = new InputHandler();
+  const player = new Player(canvas.width, canvas.height);
 
   function animate() {
-
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    player.draw(context);
+    player.update();
+    requestAnimationFrame(animate);
   }
+  animate();
 
 });
