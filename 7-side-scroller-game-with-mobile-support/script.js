@@ -136,6 +136,7 @@ window.addEventListener('load', () => {
       this.x = this.gameWidth;
       this.y = this.gameHeight - this.height;
       this.frameX = 0;
+      this.speed = 8;
     }
     draw(context) {
       context.drawImage(
@@ -152,13 +153,14 @@ window.addEventListener('load', () => {
       );
     }
     update() {
-      this.x--;
+      this.x -= this.speed;
     }
   }
 
   function handleEnemies(deltaTime) {
-    if (enemyTimer > enemyInterval) {
+    if (enemyTimer > enemyInterval + randomEnemyInterval) {
       enemies.push(new Enemy(canvas.width, canvas.height));
+      randomEnemyInterval = Math.random() * 1000 + 500;
       enemyTimer = 0;
 
     } else {
@@ -180,7 +182,8 @@ window.addEventListener('load', () => {
 
   let lastTime = 0;
   let enemyTimer = 0;
-  let enemyInterval = 1000;
+  let enemyInterval = 2000;
+  let randomEnemyInterval = Math.random() * 1000 + 500;
 
   function animate(timeStamp) {
     const deltaTime = timeStamp - lastTime;
