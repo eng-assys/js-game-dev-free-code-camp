@@ -156,8 +156,14 @@ window.addEventListener('load', () => {
     }
   }
 
-  enemies.push(new Enemy(canvas.width, canvas.height));
-  function handleEnemies() {
+  function handleEnemies(deltaTime) {
+    if (enemyTimer > enemyInterval) {
+      enemies.push(new Enemy(canvas.width, canvas.height));
+      enemyTimer = 0;
+
+    } else {
+      enemyTimer += deltaTime;
+    }
     enemies.forEach(enemy => {
       enemy.draw(context);
       enemy.update();
@@ -172,7 +178,15 @@ window.addEventListener('load', () => {
   const player = new Player(canvas.width, canvas.height);
   const background = new Background(canvas.width, canvas.height);
 
-  function animate() {
+  let lastTime = 0;
+  let enemyTimer = 0;
+  let enemyInterval = 1000;
+
+  function animate(timeStamp) {
+    const deltaTime = timeStamp - lastTime;
+
+    lastTime = timeStamp;
+
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     background.draw(context);
@@ -181,10 +195,10 @@ window.addEventListener('load', () => {
     player.draw(context);
     player.update(input);
 
-    handleEnemies();
+    handleEnemies(deltaTime);
 
     requestAnimationFrame(animate);
   }
-  animate();
+  animate(0);
 
 });
