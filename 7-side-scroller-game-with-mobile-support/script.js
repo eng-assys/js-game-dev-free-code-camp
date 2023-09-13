@@ -4,6 +4,7 @@ window.addEventListener('load', () => {
   const context = canvas.getContext("2d");
   canvas.width = 800;
   canvas.height = 720;
+  let enemies = [];
 
   class InputHandler {
     constructor() {
@@ -155,8 +156,12 @@ window.addEventListener('load', () => {
     }
   }
 
+  enemies.push(new Enemy(canvas.width, canvas.height));
   function handleEnemies() {
-
+    enemies.forEach(enemy => {
+      enemy.draw(context);
+      enemy.update();
+    })
   }
 
   function displayStatusText() {
@@ -166,7 +171,6 @@ window.addEventListener('load', () => {
   const input = new InputHandler();
   const player = new Player(canvas.width, canvas.height);
   const background = new Background(canvas.width, canvas.height);
-  const enemy1 = new Enemy(canvas.width, canvas.height);
 
   function animate() {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -177,8 +181,7 @@ window.addEventListener('load', () => {
     player.draw(context);
     player.update(input);
 
-    enemy1.draw(context);
-    enemy1.update();
+    handleEnemies();
 
     requestAnimationFrame(animate);
   }
