@@ -41,7 +41,7 @@ window.addEventListener('load', () => {
       this.y = this.gameHeight - this.height;
       this.image = document.getElementById('playerImage');
       this.frameX = 0;
-      this.maxFrame = 8;
+      this.maxFrame = 5;
       this.frameY = 0;
       this.fps = 20;
       this.frameTimer = 0;
@@ -96,6 +96,7 @@ window.addEventListener('load', () => {
         this.frameY = 1;
       } else {
         this.velocityY = 0;
+        this.maxFrame = 8;
         this.frameY = 0;
       }
       if (this.y > this.gameHeight - this.height) this.y = this.gameHeight - this.height;
