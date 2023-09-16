@@ -41,7 +41,11 @@ window.addEventListener('load', () => {
       this.y = this.gameHeight - this.height;
       this.image = document.getElementById('playerImage');
       this.frameX = 0;
+      this.maxFrame = 8;
       this.frameY = 0;
+      this.fps = 20;
+      this.frameTimer = 0;
+      this.frameInterval = 1000 / this.fps;
       this.speed = 0;
       this.velocityY = 0;
       this.weight = 1;
@@ -59,7 +63,17 @@ window.addEventListener('load', () => {
         this.height
       );
     }
-    update() {
+    update(input, deltaTime) {
+      // Sprite animations
+      if (this.frameTimer > this.frameInterval) {
+        if (this.frameX >= this.maxFrame) this.frameX = 0;
+        else this.frameX++;
+        this.frameTimer = 0;
+      } else {
+        this.frameTimer += deltaTime
+      }
+
+      // Controls
       if (input.keys.indexOf('ArrowRight') > -1) {
         this.speed = 5;
       } else if (input.keys.indexOf('ArrowLeft') > -1) {
@@ -205,7 +219,7 @@ window.addEventListener('load', () => {
     background.update();
 
     player.draw(context);
-    player.update(input);
+    player.update(input, deltaTime);
 
     handleEnemies(deltaTime);
 
