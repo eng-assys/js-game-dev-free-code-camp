@@ -82,7 +82,7 @@ window.addEventListener('load', () => {
       enemies.forEach(enemy => {
         const dx = enemy.x - this.x;
         const dy = enemy.y - this.y;
-        const distance = Matth.sqrt(dx * dx + dy * dy);
+        const distance = Math.sqrt(dx * dx + dy * dy);
         if (distance < enemy.width / 2 + this.width / 2) gameOver = true;
       })
 
@@ -243,6 +243,13 @@ window.addEventListener('load', () => {
     context.fillText(`Score: ${score}`, 20, 50);
     context.fillStyle = 'white';
     context.fillText(`Score: ${score}`, 22, 52);
+    if (gameOver) {
+      context.textAlign = 'center';
+      context.fillStyle = 'black';
+      context.fillText('GAME OVER, try again!', canvas.width / 2, 200);
+      context.fillStyle = 'white';
+      context.fillText('GAME OVER, try again!', canvas.width / 2 + 2, 202);
+    }
   }
 
   const input = new InputHandler();
