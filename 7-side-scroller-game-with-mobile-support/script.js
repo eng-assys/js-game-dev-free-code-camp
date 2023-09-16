@@ -5,6 +5,7 @@ window.addEventListener('load', () => {
   canvas.width = 800;
   canvas.height = 720;
   let enemies = [];
+  let score = 0;
 
   class InputHandler {
     constructor() {
@@ -154,6 +155,7 @@ window.addEventListener('load', () => {
       this.frameTimer = 0;
       this.frameInterval = 1000 / this.fps;
       this.speed = 8;
+      this.markedForDeletion = false;
     }
     draw(context) {
       context.drawImage(
@@ -178,26 +180,36 @@ window.addEventListener('load', () => {
         this.frameTimer += deltaTime;
       }
       this.x -= this.speed;
+      if (this.x < 0 - this.width) {
+        this.markedForDeletion = true;
+        score++;
+      }
     }
   }
 
   function handleEnemies(deltaTime) {
     if (enemyTimer > enemyInterval + randomEnemyInterval) {
       enemies.push(new Enemy(canvas.width, canvas.height));
+      console.log(enemies);
       randomEnemyInterval = Math.random() * 1000 + 500;
       enemyTimer = 0;
 
     } else {
       enemyTimer += deltaTime;
     }
-    enemies.forEach(enemy => {
+    enemies.forEach((enemy, index) => {
       enemy.draw(context);
       enemy.update(deltaTime);
+      if (enemy.markedForDeletion) enemies.splice(index, 1);
     })
   }
 
-  function displayStatusText() {
-
+  function displayStatusText(context) {
+    context.font = '40px Helvetica';
+    context.fillStyle = 'black';
+    context.fillText(`Score: ${score}`, 20, 50);
+    context.fillStyle = 'white';
+    context.fillText(`Score: ${score}`, 22, 52);
   }
 
   const input = new InputHandler();
@@ -223,6 +235,8 @@ window.addEventListener('load', () => {
     player.update(input, deltaTime);
 
     handleEnemies(deltaTime);
+
+    displayStatusText(context);
 
     requestAnimationFrame(animate);
   }
