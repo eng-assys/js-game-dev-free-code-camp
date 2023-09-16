@@ -6,6 +6,7 @@ window.addEventListener('load', () => {
   canvas.height = 720;
   let enemies = [];
   let score = 0;
+  let gameOver = false;
 
   class InputHandler {
     constructor() {
@@ -52,6 +53,18 @@ window.addEventListener('load', () => {
       this.weight = 1;
     }
     draw(context) {
+      context.strokeStyle = 'white';
+      context.strokeRect(this.x, this.y, this.width, this.height);
+      context.beginPath();
+      context.arc(
+        this.x + this.width / 2,
+        this.y + this.height / 2,
+        this.width / 2,
+        0,
+        Math.PI * 2
+      );
+      context.stroke();
+
       context.drawImage(
         this.image,
         this.frameX * this.width,
@@ -64,7 +77,15 @@ window.addEventListener('load', () => {
         this.height
       );
     }
-    update(input, deltaTime) {
+    update(input, deltaTime, enemies) {
+      // Collision detection
+      enemies.forEach(enemy => {
+        const dx = enemy.x - this.x;
+        const dy = enemy.y - this.y;
+        const distance = Matth.sqrt(dx * dx + dy * dy);
+        if (distance < enemy.width / 2 + this.width / 2) gameOver = true;
+      })
+
       // Sprite animations
       if (this.frameTimer > this.frameInterval) {
         if (this.frameX >= this.maxFrame) this.frameX = 0;
@@ -158,6 +179,18 @@ window.addEventListener('load', () => {
       this.markedForDeletion = false;
     }
     draw(context) {
+      context.strokeStyle = 'white';
+      context.strokeRect(this.x, this.y, this.width, this.height);
+      context.beginPath();
+      context.arc(
+        this.x + this.width / 2,
+        this.y + this.height / 2,
+        this.width / 2,
+        0,
+        Math.PI * 2
+      );
+      context.stroke();
+
       context.drawImage(
         this.image,
         this.frameX * this.width,
@@ -232,13 +265,13 @@ window.addEventListener('load', () => {
     background.update();
 
     player.draw(context);
-    player.update(input, deltaTime);
+    player.update(input, deltaTime, enemies);
 
     handleEnemies(deltaTime);
 
     displayStatusText(context);
 
-    requestAnimationFrame(animate);
+    if (!gameOver) requestAnimationFrame(animate);
   }
   animate(0);
 
