@@ -7,6 +7,7 @@ window.addEventListener('load', () => {
   let enemies = [];
   let score = 0;
   let gameOver = false;
+  const fullScreenButton = document.getElementById('fullScreenButton');
 
   class InputHandler {
     constructor() {
@@ -292,6 +293,22 @@ window.addEventListener('load', () => {
     gameOver = false;
     animate(0);
   }
+
+  async function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+      try {
+        await canvas.requestFullscreen();
+      } catch (error) {
+        alert(`Error, can't enable full-screen mode: ${error.message}`);
+      }
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  fullScreenButton.addEventListener('click', toggleFullScreen);
+
+  toggleFullScreen();
 
   const input = new InputHandler();
   const player = new Player(canvas.width, canvas.height);
