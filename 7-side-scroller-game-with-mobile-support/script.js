@@ -278,9 +278,9 @@ window.addEventListener('load', () => {
     if (gameOver) {
       context.textAlign = 'center';
       context.fillStyle = 'black';
-      context.fillText('GAME OVER, press Enter to restart!', canvas.width / 2, 200);
+      context.fillText('GAME OVER, press Enter or swipe down to restart!', canvas.width / 2, 200);
       context.fillStyle = 'white';
-      context.fillText('GAME OVER, press Enter to restart!', canvas.width / 2 + 2, 202);
+      context.fillText('GAME OVER, press Enter or swipe down to restart!', canvas.width / 2 + 2, 202);
     }
   }
 
