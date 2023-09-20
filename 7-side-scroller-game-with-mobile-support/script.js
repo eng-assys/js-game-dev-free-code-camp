@@ -27,7 +27,15 @@ window.addEventListener('load', () => {
           e.key === "ArrowRight") {
           this.keys.splice(this.keys.indexOf(e.key), 1);
         }
-        console.log(e.key, this.keys);
+      });
+      window.addEventListener('touchstart', e => {
+        console.log('start');
+      });
+      window.addEventListener('touchmove', e => {
+        console.log('moving');
+      });
+      window.addEventListener('touchend', e => {
+        console.log('end');
       });
     }
   }
